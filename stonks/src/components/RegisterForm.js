@@ -20,7 +20,7 @@ function RegisterForm() {
             setSuccess(true);
             setError(null);
         } catch (err) {
-            setError(err.response.data.message);
+            setError(err.response);
             setSuccess(false);
         }
     };

@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'stonksDB',
+    database: 'stonks_app',
     password: '1234',
     port: 5432,
 });
