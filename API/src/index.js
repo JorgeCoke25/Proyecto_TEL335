@@ -8,9 +8,9 @@ const app = new koa();
 const port = 8080;
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'stonks_app',
+    user: 'stonks',
+    host: '172.20.0.2',
+    database: 'stonksDB',
     password: '1234',
     port: 5432,
 });
