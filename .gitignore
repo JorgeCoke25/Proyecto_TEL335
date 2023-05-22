@@ -11,6 +11,7 @@ stonks/node_modules
 
 # production
 /build
+API/dist
 
 # misc
 .DS_Store
