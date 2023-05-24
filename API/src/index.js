@@ -1,10 +1,11 @@
 import koa from 'koa'
 import bodyParser from 'koa-body'
 import router from './routes/index'
+import {dbConfig} from "./db_connection";
+import mysql from 'mysql2';
 
 const app = new koa();
 const port = 8080;
-
 
 
 app.use(bodyParser({ multipart: true, urlencoded: true }))
@@ -14,17 +15,25 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
 
-import connection from "./db_connection";
-// Conecta a la base de datos
-connection.connect((err) => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-        return;
+// Función de verificación de conexión
+const testConnection = async () => {
+    const connection = mysql.createConnection(dbConfig);
+
+    try {
+        // Intentar establecer la conexión
+        await connection.promise().query('SELECT 1');
+
+        console.log('La conexión con la base de datos se ha establecido correctamente.');
+    } catch (error) {
+        console.error('Error al conectar con la base de datos:', error.message);
+    } finally {
+        // Cerrar la conexión
+        connection.end();
     }
-    console.log('Conexión exitosa a la base de datos');
-});
+};
 
-
+// Llamar a la función de verificación de conexión al iniciar la API
+testConnection();
 
 
 /*
