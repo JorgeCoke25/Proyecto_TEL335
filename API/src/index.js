@@ -2,18 +2,10 @@ import koa from 'koa'
 import bodyParser from 'koa-body'
 import router from './routes/index'
 
-const { Pool } = require('pg');
-
 const app = new koa();
 const port = 8080;
 
-const pool = new Pool({
-    user: 'stonks',
-    host: '172.20.0.2',
-    database: 'stonksDB',
-    password: '1234',
-    port: 5432,
-});
+import connection from "./db_connection";
 
 app.use(bodyParser({ multipart: true, urlencoded: true }))
 app.use(router.routes())
@@ -21,6 +13,18 @@ app.use(router.routes())
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
+
+// Conecta a la base de datos
+connection.connect((err) => {
+    if (err) {
+        console.error('Error al conectar a la base de datos:', err);
+        return;
+    }
+    console.log('Conexión exitosa a la base de datos');
+});
+
+
+
 
 /*
 app.post('/api/register', (req, res) => {

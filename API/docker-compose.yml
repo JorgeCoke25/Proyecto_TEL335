@@ -1,30 +1,25 @@
 version: '3'
 services:
   db:
-    image: postgres:latest
-    restart: always
-    environment:
-      POSTGRES_USER: stonks
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: stonksDB
+    image: mysql:latest
     ports:
-      - 5432:5432 #172.20.0.2(Host)
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    networks:
-      - stonks_network
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
+      - 3306:3306
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@stonks.cl
-      PGADMIN_DEFAULT_PASSWORD: 1234
-    ports:
-      - 5050:80
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=stonksDB
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=1234
     volumes:
-      - ./data/pgadmin:/var/lib/pgadmin
-    networks:
-      - stonks_network
-networks:
-  stonks_network:
-    driver: bridge
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    links:
+      - db
+    ports:
+      - '8081:80'
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 1234
