@@ -5,7 +5,7 @@ import router from './routes/index'
 const app = new koa();
 const port = 8080;
 
-import connection from "./db_connection";
+
 
 app.use(bodyParser({ multipart: true, urlencoded: true }))
 app.use(router.routes())
@@ -14,6 +14,7 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
 
+import connection from "./db_connection";
 // Conecta a la base de datos
 connection.connect((err) => {
     if (err) {
