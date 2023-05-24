@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir dist --copy-files",
     "start": "npm run build && node dist/index.js",
-    "start:dev": "docker-compose up -d && npx kill-port 8080 && nodemon --exec babel-node src/index.js",
-    "clear": "docker-compose down"
+    "compose":"docker-compose up -d",
+    "clear": "docker-compose down",
+    "start:dev": "compose && nodemon --exec babel-node src/index.js"
   },
   "author": "",
   "license": "ISC",

@@ -13,7 +13,14 @@ app.use(router.routes())
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
-})
+}).on("error", function (err) {
+        process.once("SIGUSR2", function () {
+            process.kill(process.pid, "SIGUSR2");
+        });
+        process.on("SIGINT", function () {
+            process.kill(process.pid, "SIGINT");
+        });
+    });
 
 // Función de verificación de conexión
 const testConnection = async () => {
