@@ -14,3 +14,10 @@ exports.registerUserInDataBase = async(email,name,password)=>{
     // Liberar la conexión para que pueda ser reutilizada
     connection.release();
 }
+
+exports.getUserFromDataBaseByEmail = async (email,password)=>{
+    const connection = await getConnection();
+    const [rows] =  await connection.execute('Select * From users Where email = ?', [email]);
+    connection.release();
+    return rows[0].password === password;
+}

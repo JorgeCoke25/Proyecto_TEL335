@@ -1,4 +1,5 @@
 import userActions from '../../actions/user'
+import {message} from "koa/lib/response";
 
 exports.getUsers= async(ctx)=>{
     try{
@@ -37,4 +38,31 @@ exports.registerUser= async (ctx)=>{
                 message: "Hubo un error al procesar los datos, intente nuevamente"
             }
     }
+}
+
+exports.LoginUser = async (ctx)=>{
+    try{
+        const bool =  await userActions.getUserFromDataBaseByEmail(ctx.request.body.email,ctx.request.body.password)
+        console.log(bool)
+        if(bool){
+            ctx.body= {
+                message: "Usuario coincide"
+            }
+            return ctx;
+        }
+        else{
+            ctx.status = 500
+            ctx.body= {
+                message: "Contraseña no coincide"
+            }
+            return ctx;
+        }
+    }catch (e){
+    ctx.status=500
+    ctx.body=
+        {
+            status: 500,
+            message: "Hubo un error al procesar los datos, intente nuevamente"
+        }
+}
 }

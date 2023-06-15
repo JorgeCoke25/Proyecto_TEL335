@@ -8,6 +8,8 @@ router.get('/health', getHealth);
 router.get('/api/users', users.getUsers);
 //Registrar usuario
 router.post('/api/users', users.registerUser);
+//Buscar un usuario
+router.post('/api/user', users.LoginUser);
 
 
 export default router

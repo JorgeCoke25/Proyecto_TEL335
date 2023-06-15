@@ -12,11 +12,13 @@ function RegisterForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://localhost:8080/api/register', {
-                email,
-                name,
-                password,
+            const info = ({
+                email: email,
+                name: name,
+                password: password
             });
+            const response = await axios.post('http://localhost:8080/api/users', info);
+            console.log(response.data);
             setSuccess(true);
             setError(null);
         } catch (err) {
@@ -40,7 +42,7 @@ function RegisterForm() {
                     <label for="exampleInputName1" className="form-label">
                         <p className="tittle-label">Nombre y Apellido</p>
                         <input type="text" className="form-control" value={name}
-                               onChange={(e) => setName(e.target.value)}/>
+                               onChange={(e) =>     setName(e.target.value)}/>
                     </label>
                 </div>
                 <div className="mb-3">

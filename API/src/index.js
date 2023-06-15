@@ -3,8 +3,10 @@ import bodyParser from 'koa-body'
 import router from './routes/index'
 import {dbConfig} from "./db_connection";
 import mysql from 'mysql2';
+import cors from '@koa/cors';
 
 const app = new koa();
+app.use(cors());
 const port = 8080;
 
 
