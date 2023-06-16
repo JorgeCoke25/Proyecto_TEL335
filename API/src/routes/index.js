@@ -7,9 +7,9 @@ router.get('/health', getHealth);
 //Obtener usuarios
 router.get('/api/users', users.getUsers);
 //Registrar usuario
-router.post('/api/users', users.registerUser);
-//Buscar un usuario
-router.post('/api/user', users.LoginUser);
+router.post('/api/user/register', users.registerUser);
+//Iniciar sesion de un usuario
+router.post('/api/user/login', users.LoginUser);
 
 
 export default router

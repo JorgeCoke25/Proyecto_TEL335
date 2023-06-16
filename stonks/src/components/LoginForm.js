@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {Button} from "react-bootstrap";
-import '../components/RegisterForm.css'
+import '../components/LoginForm.css'
 
 
-function RegisterForm() {
+function LoginForm() {
     const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -16,10 +15,9 @@ function RegisterForm() {
         try {
             const info = ({
                 email: email,
-                name: name,
                 password: password
             });
-            const response = await axios.post('http://localhost:8080/api/users', info);
+            const response = await axios.post('http://localhost:8080/api/user/login', info);
             console.log(response.data);
             setSuccess(true);
             setError(null);
@@ -41,13 +39,6 @@ function RegisterForm() {
                     </label>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleInputName1" className="form-label">
-                        <p className="tittle-label">Nombre y Apellido</p>
-                        <input type="text" className="form-control" value={name}
-                               onChange={(e) =>     setName(e.target.value)}/>
-                    </label>
-                </div>
-                <div className="mb-3">
                     <label for="exampleInputPassword1" className="form-label">
                         <p className="tittle-label">Contraseña</p>
                         <input type="password" className="form-control" id="exampleInputPassword1" value={password}
@@ -57,9 +48,9 @@ function RegisterForm() {
                 <Button className="register-button" variant="outline-light" type="submit">Registrarse</Button>
             </form>
             {error && <div>{error}</div>}
-            {success && <div>¡Registro exitoso!</div>}
+            {success && <div>¡Inicio de sesion exitoso!</div>}
         </div>
     );
 }
 
-export default RegisterForm;
+export default LoginForm;
