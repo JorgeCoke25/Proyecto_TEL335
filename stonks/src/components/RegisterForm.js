@@ -19,7 +19,7 @@ function RegisterForm() {
                 name: name,
                 password: password
             });
-            const response = await axios.post('http://localhost:8080/api/users', info);
+            const response = await axios.post('http://localhost:8080/api/user/register', info);
             console.log(response.data);
             setSuccess(true);
             setError(null);
@@ -56,8 +56,7 @@ function RegisterForm() {
                 </div>
                 <Button className="register-button" variant="outline-light" type="submit">Registrarse</Button>
             </form>
-            {error && <div>{error}</div>}
-            {success && <div>¡Registro exitoso!</div>}
+
         </div>
     );
 }

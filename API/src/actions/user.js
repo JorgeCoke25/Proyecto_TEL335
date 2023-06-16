@@ -1,5 +1,8 @@
 import {getConnection} from "../db_connection";
 
+const bcrypt = require('bcrypt');
+
+
 exports.getUsersFromDataBase = async ()=> {
     const connection = await getConnection();
     const [rows] = await connection.execute('Select * From users')
@@ -10,14 +13,30 @@ exports.getUsersFromDataBase = async ()=> {
 
 exports.registerUserInDataBase = async(email,name,password)=>{
     const connection = await getConnection();
-    await connection.execute('INSERT INTO users (email, name, password) VALUES (?, ?, ?)', [email, name, password]);
-    // Liberar la conexión para que pueda ser reutilizada
-    connection.release();
+    const saltRounds = 10;
+
+    bcrypt.genSalt(saltRounds, function (error, salt) {
+        if (error) {
+            console.error('Error al generar el salt:', error);
+            return;
+        }
+
+        // Encripta la contraseña utilizando el salt
+        bcrypt.hash(password, salt, async function (error, hash) {
+            if (error) {
+                console.error('Error al encriptar la contraseña:', error);
+                return;
+            }
+            await connection.execute('INSERT INTO users (email, name, password) VALUES (?, ?, ?)', [email, name, hash]);
+            // Liberar la conexión para que pueda ser reutilizada
+            connection.release();
+        });
+    });
+
 }
 
 exports.getUserFromDataBaseByEmail = async (email,password)=>{
     const connection = await getConnection();
     const [rows] =  await connection.execute('Select * From users Where email = ?', [email]);
-    connection.release();
-    return rows[0].password === password;
+    return await bcrypt.compare(password, rows[0].password);
 }

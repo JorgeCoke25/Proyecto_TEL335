@@ -47,8 +47,6 @@ function LoginForm() {
                 </div>
                 <Button className="register-button" variant="outline-light" type="submit">Registrarse</Button>
             </form>
-            {error && <div>{error}</div>}
-            {success && <div>¡Inicio de sesion exitoso!</div>}
         </div>
     );
 }

@@ -7,6 +7,7 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
         },{
             path: "login",
             element:<LoginForm/>,
-        }]
+        }],
     },
 ]);
 

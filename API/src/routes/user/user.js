@@ -1,5 +1,6 @@
 import userActions from '../../actions/user'
 import {message} from "koa/lib/response";
+import bcrypt from "bcrypt";
 
 exports.getUsers= async(ctx)=>{
     try{
@@ -42,9 +43,9 @@ exports.registerUser= async (ctx)=>{
 
 exports.LoginUser = async (ctx)=>{
     try{
-        const bool =  await userActions.getUserFromDataBaseByEmail(ctx.request.body.email,ctx.request.body.password)
-        console.log(bool)
-        if(bool){
+        const valid =  await userActions.getUserFromDataBaseByEmail(ctx.request.body.email,ctx.request.body.password)
+        console.log(valid   )
+        if(valid){
             ctx.body= {
                 message: "Usuario coincide"
             }
@@ -57,6 +58,7 @@ exports.LoginUser = async (ctx)=>{
             }
             return ctx;
         }
+
     }catch (e){
     ctx.status=500
     ctx.body=
