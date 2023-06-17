@@ -1,6 +1,6 @@
 import userActions from '../../actions/user'
-import {message} from "koa/lib/response";
-import bcrypt from "bcrypt";
+const jwt = require('jsonwebtoken');
+
 
 exports.getUsers= async(ctx)=>{
     try{
@@ -44,10 +44,12 @@ exports.registerUser= async (ctx)=>{
 exports.LoginUser = async (ctx)=>{
     try{
         const valid =  await userActions.getUserFromDataBaseByEmail(ctx.request.body.email,ctx.request.body.password)
-        console.log(valid   )
+        console.log(valid)
         if(valid){
+            const token = jwt.sign({ userEmail: ctx.request.body.email }, 'StonksKey', { expiresIn: '1h' });
             ctx.body= {
-                message: "Usuario coincide"
+                token: token,
+                message: "Usuario validado"
             }
             return ctx;
         }
