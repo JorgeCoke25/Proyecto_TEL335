@@ -27,9 +27,18 @@ exports.getUsers= async(ctx)=>{
 }
 exports.registerUser= async (ctx)=>{
     try {
-        await userActions.registerUserInDataBase(ctx.request.body.email,ctx.request.body.name,ctx.request.body.password)
-        ctx.body={
-            message: "Usuario registrado correctamente"
+        const valid = await userActions.registerUserInDataBase(ctx.request.body.email,ctx.request.body.name,ctx.request.body.password)
+        if (valid){
+            ctx.body={
+                message: "Usuario registrado correctamente"
+            }
+        }else{
+            ctx.status=409
+            ctx.body=
+                {
+                    status: 409,
+                    message: "Este usuario ya tiene una cuenta con este correo registrado"
+                }
         }
     }catch (e){
         ctx.status=500
@@ -44,7 +53,6 @@ exports.registerUser= async (ctx)=>{
 exports.LoginUser = async (ctx)=>{
     try{
         const valid =  await userActions.getUserFromDataBaseByEmail(ctx.request.body.email,ctx.request.body.password)
-        console.log(valid)
         if(valid){
             const token = jwt.sign({ userEmail: ctx.request.body.email }, 'StonksKey', { expiresIn: '1h' });
             ctx.body= {

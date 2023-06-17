@@ -14,30 +14,34 @@ exports.getUsersFromDataBase = async ()=> {
 exports.registerUserInDataBase = async(email,name,password)=>{
     const connection = await getConnection();
     const saltRounds = 10;
-
-    bcrypt.genSalt(saltRounds, function (error, salt) {
-        if (error) {
-            console.error('Error al generar el salt:', error);
-            return;
-        }
-
-        // Encripta la contraseña utilizando el salt
-        bcrypt.hash(password, salt, async function (error, hash) {
+    const exist =  await connection.execute('Select * From users Where email = ?', [email])
+    if(exist.length!==0){
+        connection.release();
+        return false
+    }else{
+        bcrypt.genSalt(saltRounds, function (error, salt) {
             if (error) {
-                console.error('Error al encriptar la contraseña:', error);
+                console.error('Error al generar el salt:', error);
                 return;
             }
-            await connection.execute('INSERT INTO users (email, name, password) VALUES (?, ?, ?)', [email, name, hash]);
-            // Liberar la conexión para que pueda ser reutilizada
-            connection.release();
-        });
-    });
 
+            // Encripta la contraseña utilizando el salt
+            bcrypt.hash(password, salt, async function (error, hash) {
+                if (error) {
+                    console.error('Error al encriptar la contraseña:', error);
+                    return;
+                }
+                await connection.execute('INSERT INTO users (email, name, password) VALUES (?, ?, ?)', [email, name, hash]);
+                // Liberar la conexión para que pueda ser reutilizada
+                connection.release();
+                return true;
+            });
+        });
+    }
 }
 
 exports.getUserFromDataBaseByEmail = async (email,password)=>{
     const connection = await getConnection();
     const [rows] =  await connection.execute('Select * From users Where email = ?', [email]);
-    console.log(rows)
     return await bcrypt.compare(password, rows[0].password);
 }
