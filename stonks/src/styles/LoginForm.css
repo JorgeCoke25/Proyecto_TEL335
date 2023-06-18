@@ -1,0 +1,28 @@
+.form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    color: #85a0c9;
+}
+
+.form{
+    justify-content: center;
+    align-items: center;
+    background: #4a6c87;
+    width: 60vh;
+    border: solid 1px;
+    border-radius: 3px;
+}
+.form-label{
+    width: 50vh;
+    height: 10vh;
+}
+.tittle-label{
+    color: black;
+    font-size: 20px;
+}
+.register-button{
+    width: 60vh;
+    height: 5vh;
+}

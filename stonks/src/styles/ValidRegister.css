@@ -1,0 +1,20 @@
+
+.container-valid {
+    display: flex;
+    height: 90vh;
+    width: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+}
+.row {
+    width: 50%;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+    background: #183d5d;
+    border-radius: 10px;
+    border: solid   ;
+}
+

@@ -1,15 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Button} from "react-bootstrap";
-import '../components/RegisterForm.css'
+import '../styles/RegisterForm.css'
+import {Outlet, useNavigate} from "react-router";
+
 
 
 function RegisterForm() {
+    const navigate = useNavigate();
+
+
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
+    const [response, setResponse] = useState(null);
+
+
+    useEffect(() => {
+        // Verificar si el registro fue exitoso
+        if (response?.status === 200) {
+            navigate('valid')
+        }
+    }, [response]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,13 +32,13 @@ function RegisterForm() {
                 name: name,
                 password: password
             });
-            const response = await axios.post('http://localhost:8080/api/user/register', info);
-            console.log(response.data);
-            setSuccess(true);
-            setError(null);
+            setResponse(await axios.post('http://localhost:8080/api/user/register', info));
+            // Redirigir a la página de éxito si el registro fue exitoso
+
+
+
         } catch (err) {
-            setError(err.response);
-            setSuccess(false);
+            console.log(err)
         }
     };
 
@@ -56,8 +69,7 @@ function RegisterForm() {
                 </div>
                 <Button className="register-button" variant="outline-light" type="submit">Registrarse</Button>
             </form>
-
-        </div>
+            </div>
     );
 }
 

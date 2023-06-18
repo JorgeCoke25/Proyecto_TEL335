@@ -30,8 +30,10 @@ exports.registerUser= async (ctx)=>{
         const valid = await userActions.registerUserInDataBase(ctx.request.body.email,ctx.request.body.name,ctx.request.body.password)
         if (valid){
             ctx.body={
+                status: 200,
                 message: "Usuario registrado correctamente"
             }
+            return ctx
         }else{
             ctx.status=409
             ctx.body=
@@ -39,6 +41,7 @@ exports.registerUser= async (ctx)=>{
                     status: 409,
                     message: "Este usuario ya tiene una cuenta con este correo registrado"
                 }
+                return ctx
         }
     }catch (e){
         ctx.status=500
@@ -47,6 +50,7 @@ exports.registerUser= async (ctx)=>{
                 status: 500,
                 message: "Hubo un error al procesar los datos, intente nuevamente"
             }
+            return ctx
     }
 }
 

@@ -1,0 +1,17 @@
+.custom-navbar {
+    background-color: #183d5d;
+    height: 10vh;
+    border: solid 1px;
+    border-radius: 3px;
+}
+.home{
+    font-size: 30px;
+}
+.container{
+    margin-left: 0;
+    width: 20%;
+}
+.nav-link{
+    font-size: 30px;
+    color: #85a0c9;
+}

@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {Button} from "react-bootstrap";
-import '../components/LoginForm.css'
+import '../styles/LoginForm.css'
 
 
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,16 +17,15 @@ function LoginForm() {
             });
             const response = await axios.post('http://localhost:8080/api/user/login', info);
             console.log(response.data);
-            setSuccess(true);
-            setError(null);
+
         } catch (err) {
-            setError(err.response);
-            setSuccess(false);
+            console.log(err)
         }
     };
 
     return (
         <div className="form-container">
+
             <form className='form' onSubmit={handleSubmit}>
                 <div className="mb-2">
                     <label for="exampleInputEmail1" className="form-label">
@@ -45,7 +42,7 @@ function LoginForm() {
                                onChange={(e) => setPassword(e.target.value)}/>
                     </label>
                 </div>
-                <Button className="register-button" variant="outline-light" type="submit">Registrarse</Button>
+                <Button className="register-button" variant="outline-light" type="submit">Iniciar Sesion</Button>
             </form>
         </div>
     );
