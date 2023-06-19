@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Button} from "react-bootstrap";
-import '../styles/RegisterForm.css'
-import {Outlet, useNavigate} from "react-router";
+import {Alert, Button} from "react-bootstrap";
+import '../styles/Form.css'
+import {useNavigate} from "react-router";
 
 
 
@@ -14,6 +14,10 @@ function RegisterForm() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
+
+
 
 
     useEffect(() => {
@@ -38,12 +42,24 @@ function RegisterForm() {
 
 
         } catch (err) {
-            console.log(err)
+            if (err.response && err.response.status === 409) {
+                setShowAlert(true);
+                setError(err.response.data.message);
+            } else {
+                // Si ocurre otro error, mostrar un mensaje genérico
+                setShowAlert(true);
+                setError('Ha ocurrido un error en el registro.');
+            }
         }
     };
 
     return (
         <div className="form-container">
+            {showAlert && (
+                <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                    {error}
+                </Alert>
+            )}
             <form className='form' onSubmit={handleSubmit}>
                 <div className="mb-2">
                     <label for="exampleInputEmail1" className="form-label">

@@ -7,11 +7,28 @@
 .home{
     font-size: 30px;
 }
-.container{
-    margin-left: 0;
-    width: 20%;
+.nav-container{
+    width: 1800px;
+    display: flex;
+    margin: 0;
+    justify-content: space-between;
 }
 .nav-link{
-    font-size: 30px;
+    font-size: 25px;
     color: #85a0c9;
+}
+
+.session-buttons{
+    display: flex;
+    justify-content: end;
+}
+
+.btn{
+    font-size: 15px;
+    color: #85a0c9;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }

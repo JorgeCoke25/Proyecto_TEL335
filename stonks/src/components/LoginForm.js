@@ -1,12 +1,18 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {Button} from "react-bootstrap";
-import '../styles/LoginForm.css'
+import {Alert, Button} from "react-bootstrap";
+import '../styles/Form.css'
+import {useNavigate} from "react-router";
 
 
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
+
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,16 +22,28 @@ function LoginForm() {
                 password: password
             });
             const response = await axios.post('http://localhost:8080/api/user/login', info);
-            console.log(response.data);
+            localStorage.setItem('token', response.data.token);
+            navigate('/')
 
         } catch (err) {
-            console.log(err)
+            if (err.response && err.response.status === 401) {
+                setShowAlert(true);
+                setError(err.response.data.message);
+            } else {
+                // Si ocurre otro error, mostrar un mensaje genérico
+                setShowAlert(true);
+                setError('Ha ocurrido un error en el inicio de sesion, porfavor intente mas tarde.');
+            }
         }
     };
 
     return (
         <div className="form-container">
-
+            {showAlert && (
+                <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                    {error}
+                </Alert>
+            )}
             <form className='form' onSubmit={handleSubmit}>
                 <div className="mb-2">
                     <label for="exampleInputEmail1" className="form-label">

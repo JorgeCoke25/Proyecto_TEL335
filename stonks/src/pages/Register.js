@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/RegisterForm.css'
+import '../styles/Form.css'
 import {Outlet} from "react-router";
 
 function Register() {

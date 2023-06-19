@@ -1,6 +1,5 @@
 import React from "react";
-import RegisterForm from "../components/RegisterForm";
-import '../styles/LoginForm.css'
+import '../styles/Form.css'
 import {Outlet} from "react-router";
 
 function Login() {
