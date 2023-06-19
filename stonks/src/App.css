@@ -38,3 +38,11 @@
     transform: rotate(360deg);
   }
 }
+
+.form-container{
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  color: #85a0c9;
+}
+

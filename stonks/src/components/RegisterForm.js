@@ -1,32 +1,65 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {Button} from "react-bootstrap";
+import {Alert, Button} from "react-bootstrap";
+import '../styles/Form.css'
+import {useNavigate} from "react-router";
+
+
 
 function RegisterForm() {
+    const navigate = useNavigate();
+
+
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+
+
+
+
+    useEffect(() => {
+        // Verificar si el registro fue exitoso
+        if (response?.status === 200) {
+            navigate('valid')
+        }
+    }, [response]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://localhost:8080/api/register', {
-                email,
-                name,
-                password,
+            const info = ({
+                email: email,
+                name: name,
+                password: password
             });
-            setSuccess(true);
-            setError(null);
+            setResponse(await axios.post('http://localhost:8080/api/user/register', info));
+            // Redirigir a la página de éxito si el registro fue exitoso
+
+
+
         } catch (err) {
-            setError(err.response);
-            setSuccess(false);
+            if (err.response && err.response.status === 409) {
+                setShowAlert(true);
+                setError(err.response.data.message);
+            } else {
+                // Si ocurre otro error, mostrar un mensaje genérico
+                setShowAlert(true);
+                setError('Ha ocurrido un error en el registro.');
+            }
         }
     };
 
     return (
         <div className="form-container">
+            {showAlert && (
+                <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                    {error}
+                </Alert>
+            )}
             <form className='form' onSubmit={handleSubmit}>
                 <div className="mb-2">
                     <label for="exampleInputEmail1" className="form-label">
@@ -40,7 +73,7 @@ function RegisterForm() {
                     <label for="exampleInputName1" className="form-label">
                         <p className="tittle-label">Nombre y Apellido</p>
                         <input type="text" className="form-control" value={name}
-                               onChange={(e) => setName(e.target.value)}/>
+                               onChange={(e) =>     setName(e.target.value)}/>
                     </label>
                 </div>
                 <div className="mb-3">
@@ -52,9 +85,7 @@ function RegisterForm() {
                 </div>
                 <Button className="register-button" variant="outline-light" type="submit">Registrarse</Button>
             </form>
-            {error && <div>{error}</div>}
-            {success && <div>¡Registro exitoso!</div>}
-        </div>
+            </div>
     );
 }
 

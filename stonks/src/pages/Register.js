@@ -1,11 +1,11 @@
 import React from "react";
-import RegisterForm from "../components/RegisterForm";
-import '../components/RegisterForm.css'
+import '../styles/Form.css'
+import {Outlet} from "react-router";
 
 function Register() {
     return(
         <div className="form-container">
-            <RegisterForm></RegisterForm>
+            <Outlet/>
         </div>
     )
 }
