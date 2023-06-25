@@ -13,6 +13,8 @@ import ValidRegister from "./components/ValidRegister";
 import {createRoutesFromElements} from "react-router";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import ProfileInfo from "./components/ProfileInfo";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,6 +25,9 @@ const router = createBrowserRouter(
             </Route>
             <Route path="login" element ={< Login/> }>
                 <Route index element ={<LoginForm/>}/>
+            </Route>
+            <Route path="profile" element ={< Profile/> }>
+                <Route index element ={<ProfileInfo/>}/>
             </Route>
         </Route>
     )

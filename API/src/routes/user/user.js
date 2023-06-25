@@ -1,4 +1,5 @@
 import userActions from '../../actions/user'
+import {use} from "bcrypt/promises";
 
 const jwt = require('jsonwebtoken');
 
@@ -57,11 +58,12 @@ exports.registerUser = async (ctx) => {
 
 exports.LoginUser = async (ctx) => {
     try {
-        const valid = await userActions.getUserFromDataBaseByEmail(ctx.request.body.email, ctx.request.body.password)
-        if (valid) {
+        const id = await userActions.getUserFromDataBaseByEmail(ctx.request.body.email, ctx.request.body.password)
+        if (id!=null) {
             const token = jwt.sign({userEmail: ctx.request.body.email}, 'StonksKey');
             ctx.body = {
                 token: token,
+                id: id,
                 message: "Usuario validado"
             }
             return ctx;
@@ -69,6 +71,33 @@ exports.LoginUser = async (ctx) => {
             ctx.status = 401
             ctx.body = {
                 message: "Contraseña incorrecta"
+            }
+            return ctx;
+        }
+
+    } catch (e) {
+        ctx.status = 500
+        ctx.body =
+            {
+                status: 500,
+                message: "Hubo un error al procesar los datos, intente nuevamente"
+            }
+    }
+}
+
+exports.GetUser = async (ctx) => {
+    try {
+        const user = await userActions.getUserById(ctx.params.id)
+        if (user!=null) {
+            ctx.body = {
+                user: user,
+                message: "Usuario validado"
+            }
+            return ctx;
+        } else {
+            ctx.status = 404
+            ctx.body = {
+                message: "Usuario no encontrado"
             }
             return ctx;
         }

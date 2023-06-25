@@ -43,5 +43,17 @@ exports.registerUserInDataBase = async (email, name, password) => {
 exports.getUserFromDataBaseByEmail = async (email, password) => {
     const connection = await getConnection();
     const [rows] = await connection.execute('Select * From users Where email = ?', [email]);
-    return await bcrypt.compare(password, rows[0].password);
+    connection.release();
+    if(bcrypt.compare(password, rows[0].password)){
+        return rows[0].id;
+    }else{
+        return null
+    }
+}
+exports.getUserById= async (id)=>{
+    const connection = await getConnection();
+    const user = await connection.execute('Select * From users Where id = ?', [id]);
+    connection.release();
+    return user[0]
+
 }
