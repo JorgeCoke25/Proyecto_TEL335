@@ -1,0 +1,35 @@
+.profile-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.card{
+    width: 258px;
+    min-height: 40vh;
+    max-height: 60vh;
+    background-color: #183d5d;
+    border: 3px solid;
+    border-radius: 3px;
+}
+.card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+    color: white;
+}
+.card-img-top{
+    width: 256px;
+    height: 256px;
+    object-fit: cover;
+
+}
+.buttons{
+    margin-top: 5vh;
+    display: flex;
+
+}
