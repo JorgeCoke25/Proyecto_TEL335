@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ProfileInfo from "./components/ProfileInfo";
+import UpdatePic from "./components/UpdatePic";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
             </Route>
             <Route path="profile" element ={< Profile/> }>
                 <Route index element ={<ProfileInfo/>}/>
+                <Route path="updatePic" element={<UpdatePic/>} />
             </Route>
         </Route>
     )

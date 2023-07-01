@@ -13,6 +13,8 @@ router.post('/api/user/register', users.registerUser);
 router.post('/api/user/login', users.LoginUser);
 //Obtener usuario por id
 router.get('/api/user/:id', verifyToken , users.GetUser);
+//Actualizar foto de perfil
+router.put('/api/user/picture/:id', verifyToken, users.PutPicture)
 
 
 

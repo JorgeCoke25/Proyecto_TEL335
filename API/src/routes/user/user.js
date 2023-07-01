@@ -1,7 +1,4 @@
 import userActions from '../../actions/user'
-import {use} from "bcrypt/promises";
-
-const jwt = require('jsonwebtoken');
 
 
 exports.getUsers = async (ctx) => {
@@ -15,6 +12,7 @@ exports.getUsers = async (ctx) => {
             }
             return ctx
         }
+
         ctx.body = {
             users: users
         }
@@ -59,10 +57,8 @@ exports.registerUser = async (ctx) => {
 exports.LoginUser = async (ctx) => {
     try {
         const id = await userActions.getUserFromDataBaseByEmail(ctx.request.body.email, ctx.request.body.password)
-        if (id!=null) {
-            const token = jwt.sign({userEmail: ctx.request.body.email}, 'StonksKey');
+        if (id != null) {
             ctx.body = {
-                token: token,
                 id: id,
                 message: "Usuario validado"
             }
@@ -88,9 +84,19 @@ exports.LoginUser = async (ctx) => {
 exports.GetUser = async (ctx) => {
     try {
         const user = await userActions.getUserById(ctx.params.id)
-        if (user!=null) {
+        if (user != null) {
+            const convertImageUser=(user)=>{
+                const image = (user[0].image).toString("base64")
+                return{
+                    id: user[0].id,
+                    name: user[0].name,
+                    email: user[0].email,
+                    password: user[0].password,
+                    image: image
+                }
+            }
             ctx.body = {
-                user: user,
+                user: convertImageUser(user),
                 message: "Usuario validado"
             }
             return ctx;
@@ -102,6 +108,35 @@ exports.GetUser = async (ctx) => {
             return ctx;
         }
 
+    } catch (e) {
+        console.log(e   )
+        ctx.status = 500
+        ctx.body =
+            {
+                status: 500,
+                message: "Hubo un error al procesar los datos, intente nuevamente"
+            }
+    }
+}
+exports.PutPicture = async (ctx) => {
+    const b64 = ctx.request.body.data;
+    try {
+        const bool = await userActions.PutUserPicture(ctx.params.id, b64);
+        if (bool) {
+            ctx.body = {
+                status: 200,
+                message: "Foto de perfil subida correctamente"
+            }
+            return ctx
+        } else {
+            ctx.status = 500
+            ctx.body =
+                {
+                    status: 500,
+                    message: "Hubo un problema con la foto de perfil"
+                }
+            return ctx
+        }
     } catch (e) {
         ctx.status = 500
         ctx.body =

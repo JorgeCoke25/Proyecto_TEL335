@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router";
-import {Button} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
@@ -12,9 +12,12 @@ function ProfileInfo() {
 
     const GetUser = async () => {
         await axios.get("http://localhost:8080/api/user/" + localStorage.getItem('id')).then(r => {
-            document.getElementById('profile-pic').setAttribute('src', (r.data.user[0].urlpic) ? r.data.user[0].urlpic : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png")
-            document.getElementById('name').textContent = r.data.user[0].name
-            document.getElementById('email').textContent = r.data.user[0].email
+            const img = "data:image/jpeg;base64,"+ r.data.user.image;
+            console.log(img)
+            document.getElementById('profile-pic').setAttribute('src', (r.data.user.image) ? img : "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png")
+
+            document.getElementById('name').textContent = r.data.user.name
+            document.getElementById('email').textContent = r.data.user.email
         });
     }
     const isAuthenticated = () => {
@@ -37,14 +40,15 @@ function ProfileInfo() {
             <div className="card">
                 <img id="profile-pic" src="..." className="card-img-top"/>
                 <div className="card-body">
-                    <h2  id="name"/>
+                    <h2 id="name"/>
                     <p id="email"/>
                 </div>
             </div>
 
             <div className="buttons">
-                <Button variant="outline-light" > Editar Nombre</Button>
-                <Button variant="outline-light" > Editar Foto de perfil</Button>
+                <Link to={`#`} className="btn btn-outline-light" variant="outline-light"> Editar Nombre</Link>
+                <Link to={`updatePic`} className="btn btn-outline-light" variant="outline-light"> Editar Foto de
+                    perfil</Link>
             </div>
         </div>
     );

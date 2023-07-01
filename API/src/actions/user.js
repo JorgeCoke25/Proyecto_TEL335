@@ -1,4 +1,5 @@
 import {getConnection} from "../db_connection";
+import sharp from "sharp";
 
 const bcrypt = require('bcrypt');
 
@@ -31,7 +32,7 @@ exports.registerUserInDataBase = async (email, name, password) => {
                     console.error('Error al encriptar la contraseña:', error);
                     return;
                 }
-                await connection.execute('INSERT INTO users (email, name, password) VALUES (?, ?, ?)', [email, name, hash]);
+                await connection.execute('INSERT INTO users (email, name, password, urlpic) VALUES (?, ?, ?, ?)', [email, name, hash, '']);
                 // Liberar la conexión para que pueda ser reutilizada
                 connection.release();
             });
@@ -44,16 +45,27 @@ exports.getUserFromDataBaseByEmail = async (email, password) => {
     const connection = await getConnection();
     const [rows] = await connection.execute('Select * From users Where email = ?', [email]);
     connection.release();
-    if(bcrypt.compare(password, rows[0].password)){
+    if (bcrypt.compare(password, rows[0].password)) {
         return rows[0].id;
-    }else{
+    } else {
         return null
     }
 }
-exports.getUserById= async (id)=>{
+exports.getUserById = async (id) => {
     const connection = await getConnection();
     const user = await connection.execute('Select * From users Where id = ?', [id]);
     connection.release();
     return user[0]
 
+}
+exports.PutUserPicture = async (id, b64) => {
+    const connection = await getConnection();
+    try{
+        const buffer = Buffer.from(b64.split(',')[1],'base64')
+        await connection.execute('UPDATE users SET image = ? WHERE id = ?', [buffer, id]);
+    }catch (e) {
+        console.log(e)
+    }
+    connection.release();
+    return true;
 }

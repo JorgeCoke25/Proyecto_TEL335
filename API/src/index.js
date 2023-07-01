@@ -4,7 +4,6 @@ import router from './routes/index'
 import {dbConfig} from "./db_connection";
 import mysql from 'mysql2';
 import cors from '@koa/cors';
-import {DefaultPicUrl} from "./aws_connection";
 
 const app = new koa();
 app.use(cors());
