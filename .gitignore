@@ -6,6 +6,9 @@ stonks/node_modules
 /.pnp
 .pnp.js
 
+#env
+API/.env
+
 # testing
 /coverage
 

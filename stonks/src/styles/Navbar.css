@@ -8,7 +8,7 @@
     font-size: 30px;
 }
 .nav-container{
-    width: 1800px;
+    width: 2000px;
     display: flex;
     margin: 0;
     justify-content: space-between;
@@ -31,4 +31,14 @@
     align-items: center;
     justify-content: center;
 
+}
+.buttons-logged{
+    display: flex;
+}
+.profile-span{
+    font-size: 20px;
+    width: 100px;
+}
+.logout-span{
+    font-size: 20px;
 }

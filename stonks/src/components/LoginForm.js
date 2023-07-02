@@ -22,7 +22,8 @@ function LoginForm() {
                 password: password
             });
             const response = await axios.post('http://localhost:8080/api/user/login', info);
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data.user.token);
+            localStorage.setItem('id', response.data.user.id);
             navigate('/')
 
         } catch (err) {

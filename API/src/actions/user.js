@@ -1,4 +1,5 @@
 import {getConnection} from "../db_connection";
+import sharp from "sharp";
 
 const bcrypt = require('bcrypt');
 
@@ -22,7 +23,7 @@ exports.registerUserInDataBase = async (email, name, password) => {
         bcrypt.genSalt(saltRounds, function (error, salt) {
             if (error) {
                 console.error('Error al generar el salt:', error);
-                return;
+                return false;
             }
 
             // Encripta la contraseña utilizando el salt
@@ -31,7 +32,7 @@ exports.registerUserInDataBase = async (email, name, password) => {
                     console.error('Error al encriptar la contraseña:', error);
                     return;
                 }
-                await connection.execute('INSERT INTO users (email, name, password) VALUES (?, ?, ?)', [email, name, hash]);
+                await connection.execute('INSERT INTO users (email, name, password,image) VALUES (?, ?, ?,?)', [email, name, hash, '']);
                 // Liberar la conexión para que pueda ser reutilizada
                 connection.release();
             });
@@ -40,8 +41,50 @@ exports.registerUserInDataBase = async (email, name, password) => {
     }
 }
 
-exports.getUserFromDataBaseByEmail = async (email, password) => {
+exports.getUserFromDataBaseByEmailAuth = async (email, password) => {
     const connection = await getConnection();
     const [rows] = await connection.execute('Select * From users Where email = ?', [email]);
-    return await bcrypt.compare(password, rows[0].password);
+    connection.release();
+    if (await bcrypt.compare(password, rows[0].password)) {
+        const jwt = require('jsonwebtoken');
+        const token = jwt.sign(rows[0].id, process.env.JWT_SECRET);
+        return {
+            id: rows[0].id,
+            email: rows[0].email,
+            name: rows[0].name,
+            image: rows[0].image,
+            token: token
+        }
+    } else {
+        return null
+    }
+}
+exports.getUserById = async (id) => {
+    const connection = await getConnection();
+    const user = await connection.execute('Select * From users Where id = ?', [id]);
+    connection.release();
+    return user[0]
+
+}
+exports.PutUserPicture = async (id, b64) => {
+    const connection = await getConnection();
+    try {
+        const buffer = Buffer.from(b64.split(',')[1], 'base64')
+        await connection.execute('UPDATE users SET image = ? WHERE id = ?', [buffer, id]);
+    } catch (e) {
+        console.log(e)
+    }
+    connection.release();
+    return true;
+}
+
+exports.PutUserName = async (id, name) => {
+    const connection = await getConnection();
+    try {
+        await connection.execute('UPDATE users SET name = ? WHERE id = ?',[name,id])
+    } catch (e) {
+        console.log(e)
+    }
+    connection.release();
+    return true
 }

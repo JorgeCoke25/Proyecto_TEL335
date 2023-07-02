@@ -8,6 +8,8 @@ import cors from '@koa/cors';
 const app = new koa();
 app.use(cors());
 const port = 8080;
+require('dotenv').config();
+
 
 
 app.use(bodyParser({ multipart: true, urlencoded: true }))
