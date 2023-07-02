@@ -37,7 +37,7 @@ function UpdatePic() {
                     file,
                     200, // ancho deseado
                     200, // altura deseada
-                    'JPEG', // formato de salida (JPEG, PNG, WEBP)
+                    'PNG', // formato de salida (JPEG, PNG, WEBP)
                     100, // calidad de salida (0-100)
                     0, // rotación deseada (en grados, 0-360)
                     (resizedImage) => {
@@ -49,6 +49,7 @@ function UpdatePic() {
                             .then((response) => {
                                 // Manejar la respuesta del servidor
                                 console.log('Imagen de perfil cargada exitosamente');
+                                navigate('../')
                             })
                             .catch((error) => {
                                 console.error('Error al cargar la imagen de perfil', error);

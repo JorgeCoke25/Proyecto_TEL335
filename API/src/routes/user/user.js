@@ -56,10 +56,10 @@ exports.registerUser = async (ctx) => {
 
 exports.LoginUser = async (ctx) => {
     try {
-        const id = await userActions.getUserFromDataBaseByEmail(ctx.request.body.email, ctx.request.body.password)
-        if (id != null) {
+        const user = await userActions.getUserFromDataBaseByEmailAuth(ctx.request.body.email, ctx.request.body.password)
+        if (user != null) {
             ctx.body = {
-                id: id,
+                user: user,
                 message: "Usuario validado"
             }
             return ctx;
@@ -84,9 +84,9 @@ exports.LoginUser = async (ctx) => {
 exports.GetUser = async (ctx) => {
     try {
         const user = await userActions.getUserById(ctx.params.id)
-        if (user != null) {
+        if (user.length!==0) {
             const convertImageUser=(user)=>{
-                const image = (user[0].image).toString("base64")
+                const image = (user[0].image)?.toString("base64")
                 return{
                     id: user[0].id,
                     name: user[0].name,
@@ -138,6 +138,34 @@ exports.PutPicture = async (ctx) => {
             return ctx
         }
     } catch (e) {
+        ctx.status = 500
+        ctx.body =
+            {
+                status: 500,
+                message: "Hubo un error al procesar los datos, intente nuevamente"
+            }
+    }
+}
+
+exports.PutName = async (ctx)=>{
+    try {
+        const bool = await userActions.PutUserName(ctx.params.id, ctx.request.body.name);
+        if (bool) {
+            ctx.body = {
+                "status": 200,
+                "message": "Nombre cambiado correctamente"
+            }
+            return ctx
+        } else {
+            ctx.status = 500
+            ctx.body =
+                {
+                    status: 500,
+                    message: "Hubo un problem en actualizar el nombre"
+                }
+            return ctx
+        }
+    }catch (e) {
         ctx.status = 500
         ctx.body =
             {

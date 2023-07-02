@@ -15,6 +15,8 @@ router.post('/api/user/login', users.LoginUser);
 router.get('/api/user/:id', verifyToken , users.GetUser);
 //Actualizar foto de perfil
 router.put('/api/user/picture/:id', verifyToken, users.PutPicture)
+//Actualizar nombre de usuario
+router.put('/api/user/name/:id',verifyToken, users.PutName)
 
 
 
