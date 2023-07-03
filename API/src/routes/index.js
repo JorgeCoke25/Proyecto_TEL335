@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import getHealth from './health/health'
 const router = new Router()
 import users from './user/user'
+import movement from './movement/movement'
 import verifyToken from "../middleware/verifyToken";
 
 router.get('/health', getHealth);
@@ -17,6 +18,8 @@ router.get('/api/user/:id', verifyToken , users.GetUser);
 router.put('/api/user/picture/:id', verifyToken, users.PutPicture)
 //Actualizar nombre de usuario
 router.put('/api/user/name/:id',verifyToken, users.PutName)
+//Registrar movimiento
+router.post('/api/movement/:id', verifyToken, movement.PostMovement)
 
 
 

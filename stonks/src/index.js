@@ -16,6 +16,9 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ProfileInfo from "./components/ProfileInfo";
 import UpdatePic from "./components/UpdatePic";
+import MovementsPage from "./pages/MovementsPage";
+import Movements from "./components/Movements";
+import RegisterMovement from "./components/RegisterMovement";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -30,6 +33,10 @@ const router = createBrowserRouter(
             <Route path="profile" element ={< Profile/> }>
                 <Route index element ={<ProfileInfo/>}/>
                 <Route path="updatePic" element={<UpdatePic/>} />
+            </Route>
+            <Route path="movements" element ={<MovementsPage/>} >
+                <Route index element={<Movements/>} />
+                <Route path="register_movement" element={<RegisterMovement/>} />
             </Route>
         </Route>
     )
