@@ -18,8 +18,22 @@ router.get('/api/user/:id', verifyToken , users.GetUser);
 router.put('/api/user/picture/:id', verifyToken, users.PutPicture)
 //Actualizar nombre de usuario
 router.put('/api/user/name/:id',verifyToken, users.PutName)
-//Registrar movimiento
-router.post('/api/movement/:id', verifyToken, movement.PostMovement)
+
+
+//Registrar movimiento a un usuario
+router.post('/api/movement/user/:id_user', verifyToken, movement.PostMovement)
+//Obtener movimiento por ID
+router.get('/api/movement/:id', verifyToken, movement.GetMovement)
+//Borrar movimiento de un usuario
+router.del('/api/movement/:id/user/:id_user', verifyToken, movement.DeleteMovement)
+//Obtener movimientos de un usuario
+router.get('/api/movements/:id', verifyToken, movement.GetMovements)
+//Editar movimineto por id
+router.put('/api/movement/:id', verifyToken, movement.UpdateMovement)
+
+
+
+
 
 
 

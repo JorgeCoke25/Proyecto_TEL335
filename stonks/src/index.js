@@ -19,6 +19,7 @@ import UpdatePic from "./components/UpdatePic";
 import MovementsPage from "./pages/MovementsPage";
 import Movements from "./components/Movements";
 import RegisterMovement from "./components/RegisterMovement";
+import EditMovement from "./components/EditMovement";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
             <Route path="movements" element ={<MovementsPage/>} >
                 <Route index element={<Movements/>} />
                 <Route path="register_movement" element={<RegisterMovement/>} />
+                <Route path="edit_movement/:id" element={<EditMovement/>} />
             </Route>
         </Route>
     )

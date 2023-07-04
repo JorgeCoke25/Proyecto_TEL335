@@ -19,8 +19,8 @@ function RegisterMovement() {
 
     const handleMontoChange = (e) => {
         const rawValue = e.target.value; // Valor ingresado sin formato
-        const formattedValue = rawValue.replace(/\D/g, '') // Remover caracteres no numéricos
-            .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Agregar puntos cada 3 dígitos
+        const formattedValue = rawValue.replace(/\D/g, '') 
+            .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
         setMonto(formattedValue);
     };
@@ -48,7 +48,7 @@ function RegisterMovement() {
             date: selectedDate.toISOString().split('T')[0]
         }
         try {
-            await axios.post('http://localhost:8080/api/movement/' + localStorage.getItem('id'), formData)
+            await axios.post('http://localhost:8080/api/movement/user/' + localStorage.getItem('id'), formData)
                 .then(r => {
                     console.log(r)
                     setRegistroExitoso(true);
