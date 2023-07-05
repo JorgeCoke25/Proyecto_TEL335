@@ -3,6 +3,7 @@ import getHealth from './health/health'
 const router = new Router()
 import users from './user/user'
 import movement from './movement/movement'
+import budget from './budget/budget'
 import verifyToken from "../middleware/verifyToken";
 
 router.get('/health', getHealth);
@@ -30,6 +31,9 @@ router.del('/api/movement/:id/user/:id_user', verifyToken, movement.DeleteMoveme
 router.get('/api/movements/:id', verifyToken, movement.GetMovements)
 //Editar movimineto por id
 router.put('/api/movement/:id', verifyToken, movement.UpdateMovement)
+
+//Registrar presupuesto
+router.post('/api/budget/user/:id_user',verifyToken,budget.PostBudget)
 
 
 

@@ -20,10 +20,14 @@ import MovementsPage from "./pages/MovementsPage";
 import Movements from "./components/Movements";
 import RegisterMovement from "./components/RegisterMovement";
 import EditMovement from "./components/EditMovement";
+import Home from "./pages/Home";
+import Budget from "./pages/Budget";
+import BudgetForm from "./components/BudgetForm";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App/>}>
+            <Route index element={<Home/>} />
             <Route path="register" element ={<Register/> }>
                 <Route index element={<RegisterForm/>}/>
                 <Route path="valid" element = {<ValidRegister/>}/>
@@ -39,6 +43,9 @@ const router = createBrowserRouter(
                 <Route index element={<Movements/>} />
                 <Route path="register_movement" element={<RegisterMovement/>} />
                 <Route path="edit_movement/:id" element={<EditMovement/>} />
+            </Route>
+            <Route path="budget" element={<Budget/>}>
+                <Route index element={<BudgetForm/>} />
             </Route>
         </Route>
     )

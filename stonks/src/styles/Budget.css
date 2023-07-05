@@ -1,0 +1,55 @@
+.budget-container{
+    display: flex;
+    margin: auto;
+    min-height: 80vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.budget-form{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: #183d5d;
+    width: 80vh;
+    border: solid 1px;
+    border-radius: 3px;
+    height: 60vh;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 40vh;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+.carousel-item{
+    position: relative;
+    width: 60vh;
+}
+.carousel-body{
+    display: flex;
+    flex-direction: column;
+    width: 40vh;
+    margin: auto;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-date{
+    display: flex;
+    flex-direction: column;
+    width: 40vh;
+    margin: auto;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+.canvas-container{
+    height: 50vh;
+}
