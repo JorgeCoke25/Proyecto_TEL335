@@ -34,6 +34,8 @@ router.put('/api/movement/:id', verifyToken, movement.UpdateMovement)
 
 //Registrar presupuesto
 router.post('/api/budget/user/:id_user',verifyToken,budget.PostBudget)
+//Obtener presupuestos de un usuario
+router.get('/api/budgets/:id', verifyToken, budget.GetBudgets)
 
 
 

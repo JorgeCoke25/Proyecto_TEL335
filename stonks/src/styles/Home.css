@@ -7,3 +7,6 @@
     color: white;
     min-height: 80vh;
 }
+.pie-container{
+    display: flex;
+}

@@ -26,3 +26,18 @@ exports.PostBudget = async (ctx) => {
             }
     }
 }
+exports.GetBudgets = async (ctx) => {
+    try {
+        const [budgets] = await budgetActions.GetBudgetsFromUser(ctx.params.id)
+        ctx.status = 200
+        ctx.body = budgets
+        return ctx
+
+    } catch (e) {
+        ctx.status = 500;
+        ctx.body = {
+            message: 'Hubo un problema al procesar los datos del los movimientos'
+        }
+        return ctx
+    }
+}

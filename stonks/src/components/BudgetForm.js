@@ -5,6 +5,7 @@ import {Pie as ChartPie} from "react-chartjs-2";
 import {ArcElement, Chart as ChartJS, Legend, Tooltip} from 'chart.js';
 import DatePicker from "react-datepicker";
 import axios from "axios";
+import {useNavigate} from "react-router";
 
 ChartJS.register(
     ArcElement,
@@ -13,10 +14,10 @@ ChartJS.register(
 )
 
 function BudgetForm() {
+    const navigate= useNavigate();
     const [selectedDate, setSelectedDate] = useState(null);
     const [salary,setSalary]=useState('');
     const [showChart, setShowChart] = useState(false);
-    const [registroExitoso, setRegistroExitoso] = useState(false);
     const [expenses, setExpenses] = useState({
         basicBills: '',
         food: '',
@@ -81,7 +82,7 @@ function BudgetForm() {
             await axios.post('http://localhost:8080/api/budget/user/' + localStorage.getItem('id'), formData)
                 .then(r => {
                     console.log(r)
-                    setRegistroExitoso(true);
+                    navigate('../')
                 });
             // Realiza alguna acción después de enviar los datos correctamente
         } catch (error) {
