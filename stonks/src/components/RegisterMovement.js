@@ -166,7 +166,7 @@ function RegisterMovement() {
                                   onChange={handleDescripcion}/>
                     </label>
                 </div>
-                <Button className="register-button" disabled={isButtonDisabled} variant="outline-light" type="submit">Guardar</Button>
+                <Button className="register-button" disabled={isButtonDisabled} variant="outline-light" type="submit" style={{backgroundColor: '#183d5d'}} >Guardar</Button>
             </form>
         </div>
     );

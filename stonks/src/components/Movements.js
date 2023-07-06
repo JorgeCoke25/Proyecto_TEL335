@@ -74,7 +74,7 @@ function Movements() {
                     {message}
                 </Alert>
             )}
-            <Link to={`register_movement`} className="btn btn-outline-light" variant="outline-light" style={{margin: 'auto', width: '100%'}} >
+            <Link to={`register_movement`} className="btn btn-outline-light" variant="outline-light" style={{margin: 'auto', width: '100%', backgroundColor: '#183d5d'}}  >
                 <span className="span" >Registrar movimiento</span>
                 <FontAwesomeIcon icon={faPencil} size="xl" beat/>
             </Link>
