@@ -1,0 +1,12 @@
+.body-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+    color: white;
+    min-height: 80vh;
+}
+.pie-container{
+    display: flex;
+}

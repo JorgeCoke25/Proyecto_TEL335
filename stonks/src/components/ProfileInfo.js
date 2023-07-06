@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 import {Alert} from "react-bootstrap";
-import {useNavigate} from "react-router";
 
 
 function ProfileInfo() {
-    const navigate = useNavigate();
     const [editName, setEditName] = useState(false)
     const [info, setInfo] = useState('')
     const [message, setMessage] = useState('')

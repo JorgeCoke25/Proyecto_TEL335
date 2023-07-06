@@ -1,0 +1,18 @@
+.movements-container{
+    display: flex;
+    height: 90vh;
+    width: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.table-container{
+    background: #4a6c87;
+
+}
+.action-button{
+     width: 12vh;
+}
+.action-buttons{
+    display: flex;
+}

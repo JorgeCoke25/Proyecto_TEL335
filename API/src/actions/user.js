@@ -1,6 +1,4 @@
 import {getConnection} from "../db_connection";
-import sharp from "sharp";
-
 const bcrypt = require('bcrypt');
 
 

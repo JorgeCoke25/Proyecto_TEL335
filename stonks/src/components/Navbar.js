@@ -2,7 +2,7 @@ import {Navbar, Nav, Button} from 'react-bootstrap';
 import React from 'react';
 import '../styles/Navbar.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faDollarSign, faRightToBracket, faUser, faUserPlus, faX} from '@fortawesome/free-solid-svg-icons';
+import {faDollarSign, faRightToBracket, faUser, faUserPlus, faX, faBook} from '@fortawesome/free-solid-svg-icons';
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
 
@@ -39,13 +39,17 @@ function Nav_bar() {
                     }
                     {isAuthenticated() &&
                         <div className="buttons-logged">
+                            <Link to={`movements`} className="btn btn-outline-light" variant="outline-light">
+                                <span className="movement-span" >Movimientos</span>
+                                <FontAwesomeIcon icon={faBook} size="xl" beat />
+                            </Link>
                             <Link to={`profile`} className="btn btn-outline-light" variant="outline-light">
                                 <span className="profile-span" >Perfil</span>
-                                <FontAwesomeIcon icon={faUser} size="xl" />
+                                <FontAwesomeIcon icon={faUser} size="xl" beat/>
                             </Link>
                             <Button className="logout" variant="outline-light" onClick={handleLogout}>
-                                <span className="logout-span" style={{marginRight: '10px'}}>Cerrar sesión</span>
-                                <FontAwesomeIcon icon={faX} size="xl"/>
+                                <span className="span" style={{marginRight: '10px'}}>Cerrar sesión</span>
+                                <FontAwesomeIcon icon={faX} size="xl" beat/>
                             </Button>
                         </div>
                     }

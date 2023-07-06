@@ -9,7 +9,7 @@ const ValidRegister = () => {
                 <div className="col-6 text-center">
                     <h1>¡Registro Exitoso!</h1>
                     <p>Tu usuario ha sido registrado exitosamente.</p>
-                    <Link to={`../../login`} className="btn btn-outline-light">Iniciar Sesion</Link>{' '}
+                    <Link to={`../../login`} className="btn btn-outline-light" style={{width: '23vh'}}>Iniciar Sesion</Link>{' '}
                 </div>
             </div>
         </div>

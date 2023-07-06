@@ -30,15 +30,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    width: 20em ;
 }
 .buttons-logged{
     display: flex;
+}
+.movement-span{
+    font-size: 20px;
+    margin-right: 20px;
 }
 .profile-span{
     font-size: 20px;
     width: 100px;
 }
-.logout-span{
+.span{
     font-size: 20px;
 }

@@ -1,0 +1,52 @@
+
+.movements-container{
+    max-height: 80vh;
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #85a0c9;
+    margin: auto;
+}
+
+.form{
+    justify-content: center;
+    align-items: center;
+    background: #4a6c87;
+    width: 80vh;
+    border: solid 1px;
+    border-radius: 3px;
+}
+.form-label{
+    width: 65vh;
+    height: 5vh;
+}
+.tittle-label{
+    color: black;
+    font-size: 20px;
+}
+.register-button{
+    width: 80vh;
+}
+
+.type-check{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+.mount-label{
+    width: 30vh;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+.persistent-check{
+    width: 65vh;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
