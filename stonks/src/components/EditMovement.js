@@ -11,9 +11,12 @@ function EditMovement() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [monto, setMonto] = useState('');
     const [tipo, setTipo] = useState('Gasto');
-    const [fijo, setFijo] = useState(0);
+    const [category, setCategory] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const isButtonDisabled = !tipo; // Verificar si el tipo está vacío
+        const isButtonDisabled = !tipo; // Verificar si el tipo está vacío
+
+
+
 
 
     const getMovement = ()=>{
@@ -24,7 +27,7 @@ function EditMovement() {
                 setTipo(response.data[0].type)
                 setMonto(response.data[0].mount.toString().replace(/\D/g, '')
                     .replace(/\B(?=(\d{3})+(?!\d))/g, '.'))
-                setFijo(response.data[0].persistent === 1);
+                setCategory(response.data[0].category);
                 setDescripcion(response.data[0].description)
                 setSelectedDate(response.data[0].date)
             })
@@ -55,9 +58,8 @@ function EditMovement() {
     const handleTipo = (e) => {
         setTipo(e.target.value);
     };
-    const handleFijo = (e) => {
-        const isChecked = e.target.checked;
-        setFijo((isChecked) ? 1 : 0);
+    const handleCategory = (e) => {
+        setCategory(e.target.value);
     };
     const handleDescripcion = (e) => {
         setDescripcion(e.target.value);
@@ -67,7 +69,7 @@ function EditMovement() {
         const formData = {
             mount: parseInt(monto.replace(/\D/g, ''), 10),
             type: tipo,
-            persistent: fijo,
+            category: category,
             description: descripcion,
             date: selectedDate.split('T')[0]
         }
@@ -92,7 +94,7 @@ function EditMovement() {
             <form className='form' onSubmit={handleSubmit}>
                 <p className="tittle-label">Monto</p>
                 <div className="mount-label">
-                    <div className="input-group mb-3">
+                    <div className="input-group mb-1">
                         <span className="input-group-text">$</span>
                         <input type="text" className="form-control" value={monto}
                                aria-label="Amount (to the nearest dollar)" onChange={handleMontoChange}/>
@@ -102,27 +104,56 @@ function EditMovement() {
                 <hr/>
                 <div className="persistent-check">
                     <div className="input-group">
-                        <div className="form-check form-switch" style={{margin: 'auto', color: 'black'}}>
-                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Fijo Mensual</label>
-                            <input className="form-check-input" type="checkbox" role="switch"
-                                   id="flexSwitchCheckDefault" onChange={handleFijo} checked={fijo}/>
+                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault" style={{margin: 'auto ',color: 'black',fontSize: '20px', display: 'flex', alignItems: 'center' ,justifyContent: 'center'}}>
+                            Categoria
+                        </label>
+                        <div className="form-check form-switch" style={{ color: 'black', display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
+                            <div className="form-check">
+                                <input checked={(category==='basicBills')} className="form-check-input" value="basicBills" type="radio" name="flexSwitchDefault" id="flexRadioDefault1" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                    Servicios basicos
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input checked={(category==='food')} className="form-check-input" value="food" type="radio" name="flexSwitchDefault" id="flexRadioDefault2" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Comida
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input checked={(category==='transport')} className="form-check-input" value="transport" type="radio" name="flexSwitchDefault" id="flexRadioDefault3" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                    Transporte
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input checked={(category==='entertainment')} className="form-check-input" value="entertainment" type="radio" name="flexSwitchDefault" id="flexRadioDefault4" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Entretenimiento
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input checked={(category==='other')} className="form-check-input" value="other" type="radio" name="flexSwitchDefault" id="flexRadioDefault5" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Otros
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <p style={{color: 'black'}}>Este movimiento se registrara automaticamente a principio de mes</p>
                 <hr/>
                 <div className="type-check">
                     <p className="tittle-label">Tipo de movimiento</p>
                     <div className="form-check">
                         <input className="form-check-input" value="Abono" type="radio" name="flexRadioDefault"
-                               id="flexRadioDefault1" onChange={handleTipo} checked={(tipo==='Abono')}/>
+                               id="flexRadioDefault7" onChange={handleTipo} checked={(tipo==='Abono')}/>
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
                             Abono
                         </label>
                     </div>
                     <div className="form-check">
                         <input className="form-check-input" value="Gasto" type="radio" name="flexRadioDefault"
-                               id="flexRadioDefault2" onChange={handleTipo} checked={(tipo==='Gasto')}/>
+                               id="flexRadioDefault8" onChange={handleTipo} checked={(tipo==='Gasto')}/>
                         <label className="form-check-label" htmlFor="flexRadioDefault2">
                             Gasto
                         </label>
@@ -145,7 +176,7 @@ function EditMovement() {
                 <div className="mb-2">
                     <label htmlFor="exampleInputDescription" className="form-label">
                         <p className="tittle-label">Descripcion</p>
-                        <textarea className="form-control" value={descripcion} id="exampleFormControlTextarea1" rows="3"
+                        <textarea className="form-control" value={descripcion} id="exampleFormControlTextarea1" rows="1"
                                   onChange={handleDescripcion}/>
                     </label>
                 </div>

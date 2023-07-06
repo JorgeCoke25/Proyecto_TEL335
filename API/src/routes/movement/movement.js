@@ -6,7 +6,7 @@ exports.PostMovement = async (ctx) => {
             ctx.params.id_user,
             ctx.request.body.mount,
             ctx.request.body.type,
-            ctx.request.body.persistent,
+            ctx.request.body.category,
             ctx.request.body.date,
             ctx.request.body.description
         ).then(() => {
@@ -87,7 +87,7 @@ exports.UpdateMovement = async (ctx) => {
         await movementActions.EditMovementFromID(
             ctx.request.body.mount,
             ctx.request.body.type,
-            ctx.request.body.persistent,
+            ctx.request.body.category,
             ctx.request.body.description,
             ctx.request.body.date,
             ctx.params.id

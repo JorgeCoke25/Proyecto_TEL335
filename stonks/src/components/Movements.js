@@ -13,6 +13,22 @@ function Movements() {
     const [message,setMessage]= useState('');
     const [show,setShow]= useState(false);
 
+    const translateCategory = (category) => {
+        switch (category) {
+            case 'basicBills':
+                return 'Servicios Básicos';
+            case 'food':
+                return 'Comida';
+            case 'transport':
+                return 'Transporte';
+            case 'entertainment':
+                return 'Entretenimiento';
+            case 'other':
+                return 'Otros';
+            default:
+                return category;
+        }
+    };
     const handleDeleteMovement = (id) => {
         // Realizar la petición DELETE a la API
         axios
@@ -29,21 +45,22 @@ function Movements() {
 
     const GetMovements = async () => {
         try {
-            await axios.get("http://localhost:8080/api/movements/" + localStorage.getItem('id'),
-                {
-                    headers:
-                        {
-                            'Authorization': 'Bearer ' + localStorage.getItem('token')
-                        }
-                })
-                .then(r => {
-                    setMovements(r.data?.movements)
-                });
-        }catch (e) {
-            setShow(true)
-            setMessage(e.response.data.message)
+            await axios.get("http://localhost:8080/api/movements/" + localStorage.getItem('id'), {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(r => {
+                const translatedMovements = r.data?.movements.map(movement => ({
+                    ...movement,
+                    category: translateCategory(movement.category)
+                }));
+                setMovements(translatedMovements);
+            });
+        } catch (e) {
+            setShow(true);
+            setMessage(e.response.data.message);
         }
-    }
+    };
     const handleEditMovement = (id) => {
         navigate(`./edit_movement/${id}`);
     };
@@ -69,7 +86,7 @@ function Movements() {
                         <th>Monto</th>
                         <th>Tipo</th>
                         <th>Descripción</th>
-                        <th>Fijo</th>
+                        <th>Categoria</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
@@ -81,7 +98,7 @@ function Movements() {
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</td>
                             <td>{movement.type}</td>
                             <td>{movement.description}</td>
-                            <td>{movement.persistent === 1 ? 'Si' : 'No'}</td>
+                            <td>{movement.category}</td>
                             <td>
                                 <div className="action-buttons" >
                                     <Button  style={{color: 'black'}} className="action-button" variant="secondary" onClick={() => handleEditMovement(movement.id)}>

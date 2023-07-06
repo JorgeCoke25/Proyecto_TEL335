@@ -5,7 +5,6 @@ import '../styles/Home.css'
 import axios from "axios";
 import {useCallback, useEffect, useState} from "react";
 import {Pie} from "react-chartjs-2";
-import { format } from 'date-fns';
 
 
 

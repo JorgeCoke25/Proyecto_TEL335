@@ -1,11 +1,11 @@
 import {getConnection} from "../db_connection";
 
-exports.PostMovementFromUser=async (id,mount,type,persistent,date,description)=>{
+exports.PostMovementFromUser=async (id,mount,type,category,date,description)=>{
     const connection = await getConnection()
     try{
         await connection.execute(
-            'INSERT INTO movement (mount,type,persistent,date,description,id_user) VALUES (?, ?, ?, ?, ?, ?)',
-            [mount,type,persistent,date,description,id])
+            'INSERT INTO movement (mount,type,category,date,description,id_user) VALUES (?, ?, ?, ?, ?, ?)',
+            [mount,type,category,date,description,id])
         connection.release()
         return true
     }catch (e) {

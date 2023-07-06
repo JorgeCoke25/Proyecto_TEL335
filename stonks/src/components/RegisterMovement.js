@@ -10,7 +10,7 @@ function RegisterMovement() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [monto, setMonto] = useState('');
     const [tipo, setTipo] = useState('Gasto');
-    const [fijo, setFijo] = useState(0);
+    const [category, setCategory] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [registroExitoso, setRegistroExitoso] = useState(false);
     const isButtonDisabled = !tipo; // Verificar si el tipo está vacío
@@ -19,7 +19,7 @@ function RegisterMovement() {
 
     const handleMontoChange = (e) => {
         const rawValue = e.target.value; // Valor ingresado sin formato
-        const formattedValue = rawValue.replace(/\D/g, '') 
+        const formattedValue = rawValue.replace(/\D/g, '')
             .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
         setMonto(formattedValue);
@@ -31,9 +31,8 @@ function RegisterMovement() {
     const handleTipo = (e) => {
         setTipo(e.target.value);
     };
-    const handleFijo = (e) => {
-        const isChecked = e.target.checked;
-        setFijo((isChecked) ? 1 : 0);
+    const handleCategory = (e) => {
+        setCategory(e.target.value);
     };
     const handleDescripcion = (e) => {
         setDescripcion(e.target.value);
@@ -43,7 +42,7 @@ function RegisterMovement() {
         const formData = {
             mount: parseInt(monto.replace(/\D/g, ''), 10),
             type: tipo,
-            persistent: fijo,
+            category: category,
             description: descripcion,
             date: selectedDate.toISOString().split('T')[0]
         }
@@ -64,7 +63,7 @@ function RegisterMovement() {
             // Reiniciar el formulario
             setMonto('');
             setTipo('Gasto');
-            setFijo(0);
+            setCategory(0);
             setDescripcion('');
             setSelectedDate(null);
         }
@@ -90,28 +89,58 @@ function RegisterMovement() {
                 <hr/>
                 <div className="persistent-check">
                     <div className="input-group">
-                        <div className="form-check form-switch" style={{margin: 'auto', color: 'black'}}>
-                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Fijo Mensual</label>
-                            <input className="form-check-input" type="checkbox" role="switch"
-                                   id="flexSwitchCheckDefault" onChange={handleFijo}/>
+                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault" style={{margin: 'auto ',color: 'black',fontSize: '20px', display: 'flex', alignItems: 'center' ,justifyContent: 'center'}}>
+                            Categoria
+                        </label>
+                        <div className="form-check form-switch" style={{ color: 'black', display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
+                            <div className="form-check">
+                                <input className="form-check-input" value="basicBills" type="radio" name="flexSwitchDefault" id="flexRadioDefault1" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                    Servicios basicos
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input" value="food" type="radio" name="flexSwitchDefault" id="flexRadioDefault2" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Comida
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input" value="transport" type="radio" name="flexSwitchDefault" id="flexRadioDefault3" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault3">
+                                    Transporte
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input" value="entertainment" type="radio" name="flexSwitchDefault" id="flexRadioDefault4" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault4">
+                                    Entretenimiento
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input" value="other" type="radio" name="flexSwitchDefault" id="flexRadioDefault5" onChange={handleCategory} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault5">
+                                    Otros
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <p style={{color: 'black'}}>Este movimiento se registrara automaticamente a principio de mes</p>
                 <hr/>
-                <div className="type-check">
-                    <p className="tittle-label">Tipo de movimiento</p>
-                    <div className="form-check">
+                <p className="tittle-label">Tipo de movimiento</p>
+
+                <div className="type-check" style={{ margin: 'auto', color: 'black', display: 'grid', gridTemplateColumns: '1fr 1fr',width: '15vh' }}>
+                    <div className="form-check" >
                         <input className="form-check-input" value="Abono" type="radio" name="flexRadioDefault"
-                               id="flexRadioDefault1" onChange={handleTipo}/>
-                        <label className="form-check-label" htmlFor="flexRadioDefault1">
+                               id="flexRadioDefault6" onChange={handleTipo}/>
+                        <label className="form-check-label" htmlFor="flexRadioDefault6">
                             Abono
                         </label>
                     </div>
                     <div className="form-check">
                         <input className="form-check-input" value="Gasto" type="radio" name="flexRadioDefault"
-                               id="flexRadioDefault2" onChange={handleTipo}/>
-                        <label className="form-check-label" htmlFor="flexRadioDefault2">
+                               id="flexRadioDefault7" onChange={handleTipo}/>
+                        <label className="form-check-label" htmlFor="flexRadioDefault7">
                             Gasto
                         </label>
                     </div>
@@ -133,7 +162,7 @@ function RegisterMovement() {
                 <div className="mb-2">
                     <label htmlFor="exampleInputDescription" className="form-label">
                         <p className="tittle-label">Descripcion</p>
-                        <textarea className="form-control" value={descripcion} id="exampleFormControlTextarea1" rows="3"
+                        <textarea className="form-control" value={descripcion} id="exampleFormControlTextarea1" rows="1"
                                   onChange={handleDescripcion}/>
                     </label>
                 </div>
