@@ -53,7 +53,6 @@ function EditMovement() {
     };
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        console.log(date)
     };
     const handleTipo = (e) => {
         setTipo(e.target.value);
@@ -71,7 +70,7 @@ function EditMovement() {
             type: tipo,
             category: category,
             description: descripcion,
-            date: selectedDate.split('T')[0]
+            date: selectedDate.toISOString().split('T')[0]
         }
         console.log(formData)
         try {

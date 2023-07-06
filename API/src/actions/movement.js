@@ -62,12 +62,12 @@ exports.GetMovementFromID = async (id)=>{
         connection.release()
     }
 }
-exports.EditMovementFromID = async (mount,type,persistent,description, date, id)=>{
+exports.EditMovementFromID = async (mount,type,category,description, date, id)=>{
     const connection = await getConnection()
     try{
         const movement = connection.execute(
-            'UPDATE movement SET mount = ?, type = ? ,persistent = ? , description = ? ,date = ? WHERE id = ?',
-            [mount,type,persistent,description,date,id]
+            'UPDATE movement SET mount = ?, type = ? ,category = ? , description = ? ,date = ? WHERE id = ?',
+            [mount,type,category,description,date,id]
         ).catch(e=>{
             console.log(e)
         })
